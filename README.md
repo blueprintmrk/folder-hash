@@ -17,7 +17,7 @@ The hash calculated by folder
 ## Example usage
 
 ```yaml
-uses: theowenyoung/folder-hash@v1
+uses: theowenyoung/folder-hash@v2
 with:
   path: |
     .cache
