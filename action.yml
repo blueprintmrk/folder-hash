@@ -9,4 +9,4 @@ outputs:
     description: 'The hash of foloder'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: './dist/index.js'
