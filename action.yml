@@ -1,13 +1,12 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Hash Folder'
+description: 'Get Folder Unique Hash For cache'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  path:  # id of input
+    description: 'folder to hash'
     required: true
-    default: 'World'
 outputs:
-  time: # id of output
-    description: 'The time we we greeted you'
+  hash: # id of output
+    description: 'The hash of foloder'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'dist/index.js'
