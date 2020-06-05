@@ -12,7 +12,7 @@ jobs:
       - name: LIST
         run: ls
       - name: Hello world action step
-        uses: ./ # Uses an action in the root directory
+        uses: ../../ # Uses an action in the root directory
         id: hello
         with:
           path: |
