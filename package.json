@@ -1,0 +1,37 @@
+{
+  "name": "folder-hash",
+  "version": "1.0.0",
+  "description": "This action calculate folder hash.",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build -o dist index.js",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && git add dist/index.js "
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theowenyoung/folder-hash"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theowenyoung/folder-hash/issues"
+  },
+  "homepage": "https://github.com/theowenyoung/folder-hash",
+  "dependencies": {
+    "@actions/core": "^1.1.0",
+    "@actions/github": "^1.1.0",
+    "folder-hash": "^3.3.1",
+    "hashdirectory": "^0.1.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1"
+  }
+}
