@@ -14,8 +14,8 @@ jobs:
         id: hello
         with:
           path: |
-          'tests'
-          '.github'
+            tests
+            .github
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.hash }}"
