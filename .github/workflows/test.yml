@@ -17,9 +17,7 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          path: |
-            tests
-            .github
+          path: tests
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.hash }}"
