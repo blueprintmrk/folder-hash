@@ -1,7 +1,9 @@
 name: 'Hash Folder'
 description: 'Get Folder Unique Hash'
-icon: hash
-color: purple
+author: Owen Young
+branding:
+  icon: hash
+  color: purple
 inputs:
   path:
     description: 'folder to hash'
