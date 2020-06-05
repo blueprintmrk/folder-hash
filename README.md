@@ -2,6 +2,10 @@
 
 The action can help you get folder hash, you can use it to generate cache key, etc...
 
+## Feture
+
+- support multiple folder
+
 ## Inputs
 
 ### `path`
