@@ -9,6 +9,7 @@ function getHashFromFolder(folders){
    promises.push(hashdirectory(folder))
  })
  return Promise.all(promises).then(data=>{   
+   core.debug(`folders hash ${data}`)
     const shasum = crypto.createHash('sha1')
     shasum.update(data.join(','))
     return shasum.digest('hex') 
