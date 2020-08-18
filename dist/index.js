@@ -402,34 +402,23 @@ module.exports = moveSync
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
 const core = __webpack_require__(470);
-const fs = __webpack_require__(226)
-const util = __webpack_require__(702)
+const util = __webpack_require__(702);
 try {
-  core.debug(`start folder-hash`)
-  let pathArr = util.getInputAsArray('path',{
-    required: true
-  })
-  core.debug(`paths: ${pathArr}`)
-  const promises = pathArr.map(item=>fs.pathExists(item))
-  // filter exist path
-  Promise.all(promises).then(existes=>{
-    pathArr = pathArr.filter((_,index)=>{
-        return existes[index];
-    })
-  })
-  if(pathArr.length>0){
-    util.getHashFromFolder(pathArr).then(data=>{
-      core.debug(`folder hash ${data}`)
+  core.debug(`start folder-hash`);
+  let pathArr = util.getInputAsArray("path", {
+    required: true,
+  });
+  core.debug(`paths: ${pathArr}`);
+  util
+    .getHashFromFolder(pathArr)
+    .then((data) => {
+      core.debug(`folder hash ${data}`);
       core.setOutput("hash", data);
-    }).catch(error=>{
-      core.error(`get hash error: ${error.message}`)
-      core.setFailed(error.message);
     })
-  }else{
-    core.warn(`folder not exists, return empty string`)
-    core.setOutput("hash", "");
-  }
-
+    .catch((error) => {
+      core.error(`get hash error: ${error.message}`);
+      core.setFailed(error.message);
+    });
 } catch (error) {
   core.setFailed(error.message);
 }
@@ -5249,39 +5238,49 @@ module.exports = outputJson
 /***/ 702:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
-
 const core = __webpack_require__(470);
 const hashdirectory = __webpack_require__(578);
 const crypto = __webpack_require__(417);
+const fs = __webpack_require__(226);
 
-function getHashFromFolder(folders){
- const promises = []
- folders.forEach(folder=>{
-   promises.push(hashdirectory(folder))
- })
- return Promise.all(promises).then(data=>{   
-   core.debug(`folders hash ${data}`)
-    const shasum = crypto.createHash('sha1')
-    shasum.update(data.join(','))
-    return shasum.digest('hex') 
-
-  })
-  
+function getHashFromFolder(folders) {
+  core.debug(`folders options: ${folders}`);
+  const filesPromises = folders.map((item) => fs.pathExists(item));
+  // filter exist path
+  return Promise.all(filesPromises).then((existes) => {
+    folders = folders.filter((_, index) => {
+      return existes[index];
+    });
+    core.debug(`valid folders ${folders}`);
+    if (folders && folders.length > 0) {
+      const promises = [];
+      folders.forEach((folder) => {
+        promises.push(hashdirectory(folder));
+      });
+      return Promise.all(promises).then((data) => {
+        core.debug(`folders hash ${data}`);
+        const shasum = crypto.createHash("sha1");
+        shasum.update(data.join(","));
+        return shasum.digest("hex");
+      });
+    } else {
+      core.warning("folders are not exists, set hash to empty");
+      return "";
+    }
+  });
 }
-exports.getHashFromFolder = getHashFromFolder
+exports.getHashFromFolder = getHashFromFolder;
 
-function getInputAsArray(
-  name,
-  options
-) {
+function getInputAsArray(name, options) {
   return core
-      .getInput(name, options)
-      .split("\n")
-      .map(s => s.trim())
-      .filter(x => x !== "")
+    .getInput(name, options)
+    .split("\n")
+    .map((s) => s.trim())
+    .filter((x) => x !== "");
 }
 
-exports.getInputAsArray = getInputAsArray
+exports.getInputAsArray = getInputAsArray;
+
 
 /***/ }),
 
