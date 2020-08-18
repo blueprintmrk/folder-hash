@@ -1,8 +1,8 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
 const fs = require('fs-extra')
 const util = require('./util')
 try {
+  core.debug(`start folder-hash`)
   let pathArr = util.getInputAsArray('path',{
     required: true
   })
