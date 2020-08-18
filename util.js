@@ -24,7 +24,7 @@ function getHashFromFolder(folders) {
         return shasum.digest("hex");
       });
     } else {
-      core.warning("folders are not exists, set hash to empty");
+      core.info("folders are not exists, set hash to empty");
       return "";
     }
   });
