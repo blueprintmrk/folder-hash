@@ -27,6 +27,7 @@
     "@actions/core": "^1.1.0",
     "@actions/github": "^1.1.0",
     "folder-hash": "^3.3.1",
+    "fs-extra": "^9.0.1",
     "hashdirectory": "^0.1.0"
   },
   "devDependencies": {
