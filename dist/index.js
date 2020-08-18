@@ -467,19 +467,32 @@ module.exports = require("os");
 
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
+const fs = __webpack_require__(266)
 const util = __webpack_require__(702)
 try {
-  const pathArr = util.getInputAsArray('path',{
+  let pathArr = util.getInputAsArray('path',{
     required: true
   })
   core.debug(`paths: ${pathArr}`)
- util.getHashFromFolder(pathArr).then(data=>{
-    core.debug(`folder hash ${data}`)
-    core.setOutput("hash", data);
-  }).catch(error=>{
-    core.error(`get hash error: ${error.message}`)
-    core.setFailed(error.message);
+  const promises = pathArr.map(item=>fs.pathExists(item))
+  // filter exist path
+  Promise.all(promises).then(existes=>{
+    pathArr = pathArr.filter((_,index)=>{
+        return existes[index];
+    })
   })
+  if(pathArr.length>0){
+    util.getHashFromFolder(pathArr).then(data=>{
+      core.debug(`folder hash ${data}`)
+      core.setOutput("hash", data);
+    }).catch(error=>{
+      core.error(`get hash error: ${error.message}`)
+      core.setFailed(error.message);
+    })
+  }else{
+    core.warn(`folder not exists, return empty string`)
+    core.setOutput("hash", "");
+  }
 
 } catch (error) {
   core.setFailed(error.message);
@@ -4112,6 +4125,14 @@ function applyAcceptHeader (res, headers) {
 
   return headers
 }
+
+
+/***/ }),
+
+/***/ 266:
+/***/ (function(module) {
+
+module.exports = eval("require")("fs-extra");
 
 
 /***/ }),
