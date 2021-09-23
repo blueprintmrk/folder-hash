@@ -10,7 +10,7 @@ inputs:
     required: true
 outputs:
   hash:
-    description: 'The hash of foloder'
+    description: 'The hash of folder'
 runs:
   using: 'node12'
   main: 'dist/index.js'
